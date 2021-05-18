@@ -1,13 +1,25 @@
 const Project = require("../models/projects");
 
 exports.addToProject = (req, res) => {
-    const {name,description,category}=req.body
-  let newImage = new Project({
-    img: req.file.path,
-    category,
-    name,
-    description
-  });
+    const {name,description,category,link}=req.body
+    let data
+    if (link) {
+      data={img: req.file.path,
+        category,
+        name,
+        description,
+        link
+      }
+      
+    } else {
+      data={img: req.file.path,
+        category,
+        name,
+        description
+      }
+      
+    }
+  let newImage = new Project(data);
 
   newImage
     .save()
