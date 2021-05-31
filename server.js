@@ -30,6 +30,7 @@ app.use('/api/v1/board',require('./routes/board'))
 app.use('/api/v1/project',require('./routes/projects'))
 app.use('/api/v1/donate',require('./routes/donate'))
 app.use('/api/v1/bee',require('./routes/spellingbee'))
+app.use('/api/v1/volunteers',require('./routes/volunteers'))
 
 
 // var nodemailer = require('nodemailer');
