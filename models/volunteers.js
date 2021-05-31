@@ -8,7 +8,6 @@ const VolunteersSchema = new Schema({
   date: { type: Date, default: Date.now },
   category: {
     type: String,
-    default:'volunteer'
   },
   name: {
     type: String,

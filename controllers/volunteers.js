@@ -1,11 +1,12 @@
 const Volunteers = require("../models/volunteers");
 
 exports.addToVolunters = (req, res) => {
-    const {name,description}=req.body
+    const {name,description,category}=req.body
   let newImage = new Volunteers({
     img: req.file.path,
     name,
-    description
+    description,
+    category
   });
 
   newImage
@@ -29,5 +30,12 @@ exports.allVolunteers=(req,res)=>{
         res.send(result)
     }).catch((err) => {
         res.send(err)
+    });
+}
+
+exports.deleteVolunteer=(req,res)=>{
+    Volunteers.findOneAndRemove(req.params.id, err => {
+        if (err) return next(err);
+        res.send("Deleted successfully!");
     });
 }
