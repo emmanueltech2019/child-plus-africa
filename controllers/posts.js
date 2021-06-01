@@ -53,7 +53,9 @@ exports.singlePost= (req, res, next) => {
 exports.addCommentToPost= (req, res) => {
   Post.findOne({ _id: req.params.id }).then(post => {
     let comment = new Comment({
-      comment: req.body.comment
+      comment: req.body.comment,
+      name: req.body.name,
+      email: req.body.email,
     });
     post.comments.push(comment);
     comment.save(error => {

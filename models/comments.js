@@ -6,6 +6,12 @@ const CommentSchema = new Schema({
     type: String,
     trim: true
   },
+  name:{
+    type:String,
+  },
+  email:{
+    type:String,
+  },
   date: { type: Date, default: Date.now }
 });
 
