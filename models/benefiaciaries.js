@@ -13,6 +13,7 @@ const beneficiariesSchema =new Schema({
       },
       name: {
         type: String,
+        uppercase: true
       },
       description: {
         type: String,

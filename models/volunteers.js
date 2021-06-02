@@ -11,6 +11,7 @@ const VolunteersSchema = new Schema({
   },
   name: {
     type: String,
+    uppercase: true
   },
   description: {
     type: String,

@@ -12,6 +12,7 @@ const ProjectSchema = new Schema({
   },
   name: {
     type: String,
+    uppercase: true
   },
   description: {
     type: String,
