@@ -26,6 +26,7 @@ exports.addToGallery = (req, res) => {
 
 exports.allGallery=(req,res)=>{
     Gallery.find()
+    .sort({ date: "descending" })
     .then((result) => {
         res.send(result)
     }).catch((err) => {

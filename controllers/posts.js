@@ -7,16 +7,28 @@ const Comment = require("../models/comments");
 
 
 // Getting All Post
-exports.getPosts=(req, res) => {
-  Post.find({}, (err, posts) => {
-    if (err) {
-      res.status(404).send("Post not found");
-      return;
-    }
-    res.status(201).send(posts);
-  });
+// exports.getPosts=(req, res) => {
+//   Post.find({},{date:-1}, (err, posts) => {
+//     if (err) {
+//       res.status(404).send("Post not found");
+//       return;
+//     }
+//     res.status(201).send(posts);
+//   });
+// };
+exports.getPosts = (req, res) => {
+  Post.find({})
+  .sort({ date: "descending" })
+    .then((posts) => {
+      res.status(201).send(posts);
+    })
+    .catch((err) => {
+      if (err) {
+        res.status(404).send("Post not found");
+        return;
+      }
+    });
 };
-
 // Adding a New Post
 exports.addPost= (req, res) => {
   console.log(req.file);

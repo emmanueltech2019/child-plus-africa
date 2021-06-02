@@ -26,6 +26,7 @@ exports.addToVolunters = (req, res) => {
 
 exports.allVolunteers=(req,res)=>{
     Volunteers.find()
+    .sort({ date: "descending" })
     .then((result) => {
         res.send(result)
     }).catch((err) => {

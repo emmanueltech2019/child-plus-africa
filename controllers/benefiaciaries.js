@@ -26,6 +26,7 @@ exports.addToBeneficiaries = (req, res) => {
 
 exports.allBeneficiaries=(req,res)=>{
     Beneficiaries.find()
+    .sort({ name:1 })
     .then((result) => {
         res.send(result)
     }).catch((err) => {

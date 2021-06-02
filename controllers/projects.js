@@ -38,6 +38,7 @@ exports.addToProject = (req, res) => {
 
 exports.allProject=(req,res)=>{
     Project.find()
+    .sort({ date: "descending" })
     .then((result) => {
         res.send(result)
     }).catch((err) => {
