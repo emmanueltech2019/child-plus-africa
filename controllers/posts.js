@@ -37,7 +37,8 @@ exports.addPost= (req, res) => {
       author: req.body.author,
       title: req.body.title,
       post: req.body.post,
-      image: req.file.path
+      image: req.file.path,
+      description: req.body.description,
     },
     (err, post) => {
       if (err) {

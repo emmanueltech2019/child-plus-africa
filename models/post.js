@@ -20,6 +20,10 @@ const PostSchema = new Schema(
       required: [true, "enter post field"],
       trim: true
     },
+    description: {
+      type: String,
+      trim: true
+    },
     image: {
       type: String,
       required: [true],
