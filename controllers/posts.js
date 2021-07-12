@@ -4,8 +4,6 @@ const router = express.Router();
 const Post = require("../models/post");
 const Comment = require("../models/comments");
 
-
-
 // Getting All Post
 // exports.getPosts=(req, res) => {
 //   Post.find({},{date:-1}, (err, posts) => {
@@ -17,20 +15,24 @@ const Comment = require("../models/comments");
 //   });
 // };
 exports.getPosts = (req, res) => {
-  Post.find({})
-  .sort({ date: "descending" })
-    .then((posts) => {
-      res.status(201).send(posts);
-    })
-    .catch((err) => {
-      if (err) {
-        res.status(404).send("Post not found");
-        return;
-      }
-    });
+  res.status(200).json({
+    message:"found",
+    post:res.paginatedResults
+  })
+  // Post.find({})
+  //   .sort({ date: "descending" })
+  //   .then((posts) => {
+  //     res.status(201).send(posts);
+  //   })
+  //   .catch((err) => {
+  //     if (err) {
+  //       res.status(404).send("Post not found");
+  //       return;
+  //     }
+  //   });
 };
 // Adding a New Post
-exports.addPost= (req, res) => {
+exports.addPost = (req, res) => {
   console.log(req.file);
   Post.create(
     {
@@ -52,7 +54,7 @@ exports.addPost= (req, res) => {
 
 // Getting a single Post with it's Comment
 
-exports.singlePost= (req, res, next) => {
+exports.singlePost = (req, res, next) => {
   Post.findById({ _id: req.params.id })
     .populate({ path: "comments", model: Comment })
     .exec((err, post) => {
@@ -63,15 +65,15 @@ exports.singlePost= (req, res, next) => {
 };
 
 // Adding A New Comment to A single Post
-exports.addCommentToPost= (req, res) => {
-  Post.findOne({ _id: req.params.id }).then(post => {
+exports.addCommentToPost = (req, res) => {
+  Post.findOne({ _id: req.params.id }).then((post) => {
     let comment = new Comment({
       comment: req.body.comment,
       name: req.body.name,
       email: req.body.email,
     });
     post.comments.push(comment);
-    comment.save(error => {
+    comment.save((error) => {
       if (error) return res.send(error);
     });
     post.save((error, post) => {
@@ -82,8 +84,8 @@ exports.addCommentToPost= (req, res) => {
 };
 
 // Adding or Removing A Like to A single Post
-exports.reactToPost=(req, res) => {
-  Post.findOne({ _id: req.params.id }).then(post => {
+exports.reactToPost = (req, res) => {
+  Post.findOne({ _id: req.params.id }).then((post) => {
     if (req.body.like_type == "increment") {
       post.likes_count += 1;
     }
@@ -97,6 +99,30 @@ exports.reactToPost=(req, res) => {
   });
 };
 
+exports.editPost = (req, res) => {
+  const { author, title, post, image, description } = req.body;
+  Post.findOneAndUpdate(
+    { _id: req.params.id },
+    { author, title, post, image, description },
+    (err,post) => {
+      if(err){
+        return res.status(400).json({
+          message:'post not updated'
+        })
+      }
+      if(post){
+        return res.status(200).json({
+          message:'post updated successfully'
+        })
+      }
+      else{
+        return res.status(400).json({
+          message:'unknown error occured'
+        })
+      }
+    }
+  );
+};
 // Getting a  Post
 // router.get("/post/:id", (req, res, next) => {
 //   Post.findOne({ _id: req.params.id }).then(post => {

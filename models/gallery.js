@@ -17,6 +17,11 @@ const GallerySchema = new Schema({
   description: {
     type: String,
   },
+  images:[
+    {
+      type: String,
+    }
+  ]
 });
 
 const Gallery = mongoose.model("gallery", GallerySchema);

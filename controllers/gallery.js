@@ -13,7 +13,7 @@ exports.addToGallery = (req, res) => {
     .save()
     .then((result) => {
       res.status(201).json({
-        message: "successfully added to gallary",
+        message: "successfully crated new gallary",
       });
     })
     .catch((err) => {
@@ -31,6 +31,54 @@ exports.allGallery=(req,res)=>{
         res.send(result)
     }).catch((err) => {
         res.send(err)
-        
     });
+}
+exports.singleGallery=(req,res)=>{
+    Gallery.findOne({_id:req.params.id})
+    .then((result) => {
+        res.send(result)
+    }).catch((err) => {
+        res.send(err)
+    });
+}
+
+exports.addToSingleGallery=(req,res)=>{
+  Gallery.findOne({_id:req.params.id})
+  .then((gallery) => {
+    if (req.files.length > 0) {
+      for (let i = 0; i < req.files.length; i++) {
+        const image = req.files[i].path
+        gallery.images.push(image)
+      }
+    }
+    gallery.save()
+    .then(()=>{
+      res.send("added successfully")
+    })
+  }).catch((err) => {
+    
+  });
+}
+
+exports.editSingleGalleryImage=(req,res)=>{
+  const {index,id}=req.body
+  Gallery.findOne({_id:id})
+  .then((gallery) => {
+    if (req.files.length > 0) {
+      let newList=[]
+      for (let i = 0; i < req.files.length; i++) {
+        const image = req.files[i].path
+        newList = [
+          ...gallery.images,
+          gallery[index]=image
+        ]
+      }
+      gallery.images=newList
+    }
+    gallery.save()
+    .then(()=>{
+      res.send("added successfully")
+    })
+  })
+
 }
