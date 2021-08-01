@@ -100,19 +100,27 @@ exports.reactToPost = (req, res) => {
 };
 
 exports.editPost = (req, res) => {
-  const { author, title, post, image, description } = req.body;
-  Post.findOneAndUpdate(
-    { _id: req.params.id },
-    { author, title, post, image, description },
-    (err,post) => {
+  const { author, title, post, description,date } = req.body;
+  Post.findOne(
+    { _id: req.params.id }, (err,post) => {
       if(err){
         return res.status(400).json({
           message:'post not updated'
         })
       }
       if(post){
-        return res.status(200).json({
-          message:'post updated successfully'
+          post.author=author
+          post.title=title
+          post.post=post
+          post.description=description
+          post.date=date
+        
+        
+        post.save()
+        .then(()=>{
+          return res.status(200).json({
+            message:'post updated successfully'
+          })
         })
       }
       else{

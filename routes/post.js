@@ -12,6 +12,6 @@ router.post("/post/add",parser,requireSignin,adminMiddleware,addPost)
 router.get("/post/:id",singlePost)
 router.post("/post/:id/comment",addCommentToPost)
 router.post("/post/:id/like", reactToPost)
-router.patch('/post/update/:id',editPost)
+router.patch('/post/update/:id',requireSignin,adminMiddleware,editPost)
 
 module.exports=router
